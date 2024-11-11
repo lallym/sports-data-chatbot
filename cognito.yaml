@@ -29,15 +29,19 @@ Resources:
                 Resource: "*"
 
   # Creates a user pool in cognito for your app to auth against
-  # This example requires MFA and validates the phone number to use as MFA
   # Other fields can be added to the schema
   UserPool:
     Type: "AWS::Cognito::UserPool"
     Properties:
       UserPoolName: !Sub ${AuthName}-user-pool
+      AllowAdminCreateUserOnly: True
+      InviteMessageTemplate:
+        EmailMessage: !Sub "Your username is {username} and temporary password is {####}."
+        EmailSubject: "You've been invited to test the Basketball Chatbot"
+        SMSMessage: !Sub "Your username is {username} and temporary password is {####}."
       AutoVerifiedAttributes:
         - phone_number
-      MfaConfiguration: "ON"
+      MfaConfiguration: "OPTIONAL"
       SmsConfiguration:
         ExternalId: !Sub ${AuthName}-external
         SnsCallerArn: !GetAtt SNSRole.Arn
@@ -53,7 +57,7 @@ Resources:
         - Name: phone_number
           AttributeDataType: String
           Mutable: false
-          Required: true
+          Required: false
         - Name: slackId
           AttributeDataType: String
           Mutable: true
@@ -132,6 +136,16 @@ Resources:
                   - "mobileanalytics:PutEvents"
                   - "cognito-sync:*"
                   - "cognito-identity:*"
+                Resource: "*"
+              - Effect: "Allow"
+                Action:
+                  - "cognito-identity:GetCredentialsForIdentity"
+                Resource: "*"
+              - Effect: "Allow"
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
                 Resource: "*"
               - Effect: "Allow"
                 Action:
