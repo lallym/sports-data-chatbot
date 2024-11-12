@@ -1,0 +1,113 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Basketball Data ChatBot</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <link rel="stylesheet" href="css/font.css">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/message.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+</head>
+<body>
+  <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div id="noCognitoMessage" class="configMessage" style="display: none;">
+      <div class="backdrop"></div>
+      <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">No Cognito User Pool Configured</h3>
+          </div>
+          <div class="panel-body">
+              <p>There is no user pool configured in <a href="/js/config.js">/js/config.js</a>.</p>
+          </div>
+      </div>
+  </div>
+
+  <header>
+    <img src="images/logo.png" width="300px"> <h1>Basketball Data ChatBot</h1>
+  </header>
+
+  <div id="main-app" style="padding: 1%; margin: auto;">
+    <div style="font-size: normal; font-weight: bold; display: auto; align-items: center; text-align: center; color: #146eb4;">Test the ChatBot below by asking questions about 2024 NBA player stats and/or 2024-2025 salary information.</br>e.g. "What is the average salary for a point guard that scores more than 20 points per game?" </div>
+      <div id="chatformoverlay">
+        <div id="chatForm" style="padding: 1%; margin: auto; display: auto; align-items: center; text-align: center;">
+          <div id="content" style="padding: 1%; margin: auto; display: block;">
+            <div style="font-size: smaller; font-weight: bold; text-align: left;">
+              <div id="chatlog" style="padding: 1%; margin: auto; overflow-y: scroll;"></div>
+              <br>
+              <div id="sql" style="padding: 1%; margin: auto;"></div>
+              <br>
+            </div>
+            <div style="font-size: normal; font-weight: bold; text-align: center; display: block" id="cost"></div>
+          </div>    
+          <div style="padding: 1%; margin: auto;">
+            <div>Enter your chatbot query below:</div>
+            <!--<input type="textarea" id="chat" size="600" style="vertical-align: top; align: top; font-size: smaller; font-weight: normal; padding: 1%; margin: auto; text-align: left; width: 600px; height: 100px;">-->
+            <div id="chat" contenteditable="true"></div>
+          </div>
+
+          <div id="buttonwrapper" style="padding: 1%; margin: auto;">
+            <button id="chatbtn" type="submit">Submit</button>
+          </div>
+        </div>
+      </div>  
+    </div>
+    <br><br>
+    <dialog id="loadermodal">
+      <div class="loader-container" style="padding: 5px; margin: auto; text-align: center; display: block">
+        <div class="loader"></div>
+        <svg viewBox="0 0 866 866" xmlns="http://www.w3.org/2000/svg" width="90">
+          <circle cx="434" cy="434" r="430"/>
+          <path class="bb-0" d="M142.327 112.062C214.1 47.017 307.79 5.714 411 .55V410.5H280.346c-8.144-184.333-121.358-284.64-138.02-298.438z" fill="currentColor"/>
+          <path class="bb-1" d="M111.104 143.388C46.716 214.908 5.822 307.995.574 410.5h235.893c-7.19-145.817-109.942-251.965-125.363-267.112z" fill="currentColor"/>
+          <path class="bb-2" d="M110.902 722.388C46.422 650.666 5.552 557.292.524 454.5h235.788c-8.297 149.66-114.564 257.273-125.41 267.888z" fill="currentColor"/>
+          <path class="bb-3" d="M141.633 753.308C213.497 818.716 307.458 860.268 411 865.45V454.5H280.354c-8.297 189.4-127.334 289.638-138.72 298.808z" fill="currentColor"/>
+          <path class="bb-4" d="M723.222 754.346C651.507 819.156 557.992 860.296 455 865.45V454h129.39c7.743 190.638 127.705 291.398 138.832 300.346z" fill="currentColor"/>
+          <path class="bb-5" d="M754.06 723.538C819.244 651.55 860.555 557.54 865.5 454H628.416c7.704 151.184 115.666 259.807 125.644 269.538z" fill="currentColor"/>
+          <path class="bb-6" d="M754.82 143.302C819.145 214.716 860.042 307.652 865.4 410H628.418c8.043-149.258 115.93-256.613 126.4-266.698z" fill="currentColor"/>
+          <path class="bb-7" d="M723.687 112.075C651.91 47.022 558.217 5.715 455 .55V410h129.53c8.944-188.743 128.016-288.947 139.157-297.925z" fill="currentColor"/>
+        </svg>
+        <div style="font-size: normal; font-weight: bold;">Processing...<br>This may take a few seconds.</div>
+      </div>    
+    </dialog>
+
+    <div id="buttons" style="padding: 2%;">
+      <form id="resetForm"  style="display: none;">
+        <input type="submit" value="Reset">
+      </form>
+      <form id="signoutForm">
+        <input type="submit" value="Sign out">
+      </form>
+    </div>
+
+  </div>
+
+  <footer class="site-footer" style="padding: 1%; margin: auto;">
+    <div class="footer-legal" style="padding: 1%; margin: auto; text-align: center;">
+      This website is intended for demonstration purposes only.
+    </div>
+    <div style="padding: 1%; margin: auto; text-align: center;">
+      <a href="https://aws.amazon.com/what-is-cloud-computing"><img src="https://d0.awsstatic.com/logos/powered-by-aws.png" style="width:100px" alt="Powered by AWS Cloud Computing"></a>
+  </div>
+  </footer>
+
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1528.0.js"></script>
+  <script src="js/vendor/jquery-3.7.1.min.js"></script>
+  <script src="js/vendor/bootstrap.min.js"></script>
+  <script src="js/vendor/amazon-cognito-identity.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/cognito-auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
