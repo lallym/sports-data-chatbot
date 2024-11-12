@@ -34,14 +34,16 @@ Resources:
     Type: "AWS::Cognito::UserPool"
     Properties:
       UserPoolName: !Sub ${AuthName}-user-pool
-      AllowAdminCreateUserOnly: True
-      InviteMessageTemplate:
-        EmailMessage: !Sub "Your username is {username} and temporary password is {####}."
-        EmailSubject: "You've been invited to test the Basketball Chatbot"
-        SMSMessage: !Sub "Your username is {username} and temporary password is {####}."
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: True
+        InviteMessageTemplate:
+            EmailMessage: "Your username is {username} and temporary password is {####}."
+            EmailSubject: "You've been invited to test the Basketball Chatbot"
+            SMSMessage: "Your username is {username} and temporary password is {####}."
       AutoVerifiedAttributes:
-        - phone_number
-      MfaConfiguration: "OPTIONAL"
+        - email
+      MfaConfiguration: "OFF"
+      DeletionProtection: "ACTIVE"
       SmsConfiguration:
         ExternalId: !Sub ${AuthName}-external
         SnsCallerArn: !GetAtt SNSRole.Arn
@@ -49,11 +51,11 @@ Resources:
         - Name: name
           AttributeDataType: String
           Mutable: true
-          Required: true
+          Required: false
         - Name: email
           AttributeDataType: String
           Mutable: false
-          Required: true
+          Required: false
         - Name: phone_number
           AttributeDataType: String
           Mutable: false
@@ -79,34 +81,6 @@ Resources:
       CognitoIdentityProviders: 
         - ClientId: !Ref UserPoolClient
           ProviderName: !GetAtt UserPool.ProviderName
-
-  # Create a role for unauthorized acces to AWS resources. Very limited access. Only allows users in the previously created Identity Pool
-  CognitoUnAuthorizedRole:
-    Type: "AWS::IAM::Role"
-    Properties:
-      AssumeRolePolicyDocument: 
-        Version: "2012-10-17"
-        Statement:
-          - Effect: "Allow"
-            Principal: 
-              Federated: "cognito-identity.amazonaws.com"
-            Action: 
-              - "sts:AssumeRoleWithWebIdentity"
-            Condition:
-              StringEquals: 
-                "cognito-identity.amazonaws.com:aud": !Ref IdentityPool
-              "ForAnyValue:StringLike":
-                "cognito-identity.amazonaws.com:amr": unauthenticated
-      Policies:
-        - PolicyName: "CognitoUnauthorizedPolicy"
-          PolicyDocument: 
-            Version: "2012-10-17"
-            Statement: 
-              - Effect: "Allow"
-                Action:
-                  - "mobileanalytics:PutEvents"
-                  - "cognito-sync:*"
-                Resource: "*"
 
   # Create a role for authorized acces to AWS resources. Control what your user can access. This example only allows Lambda invokation
   # Only allows users in the previously created Identity Pool
