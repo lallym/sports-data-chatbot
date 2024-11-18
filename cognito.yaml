@@ -133,7 +133,6 @@ Resources:
       IdentityPoolId: !Ref IdentityPool
       Roles:
         authenticated: !GetAtt CognitoAuthorizedRole.Arn
-        unauthenticated: !GetAtt CognitoUnAuthorizedRole.Arn
 
 Outputs:
   UserPoolId:
