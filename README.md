@@ -2,7 +2,7 @@
 This lab can be used to create a GenAI-powered chatbot that allows you to use natural language to query a database. We will make use of a number of AWS services including Cognito, S3, Lambda, Bedrock and Amplify Hosting.
 
 # Step 1: Deploy Cognito Resources
-We want our application to be secure, so we will use Amazon Cognito as our identity provider. Since Identity is an anciallry aspect of this lab, we will use a CloudFormation template to deploye the base Cognito resources.
+We want our application to be secure, so we will use Amazon Cognito as our identity provider. Since Identity is an ancillary aspect of this lab, we will use a CloudFormation template to deploy the base Cognito resources.
 1. In the AWS console in the us-east-1 region, navigate to CloudFormation.
 2. Click the **Create Stack** button and select the "With new resources (standard)" option.
 3. In the **Specify template** section click "Upload a template file".
