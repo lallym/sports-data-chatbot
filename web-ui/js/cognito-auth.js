@@ -57,10 +57,10 @@ window.userPool;
                 console.log('I THINK am updating my AWS config with credentials in cognito-auth.js.');
                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                     //credentials: new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId: 'us-east-1:xxxxxx-xxxx-xxxx-xxxx-xxxxxx', // your identity pool id here
+                        IdentityPoolId: 'us-west-2:xxxxxx-xxxx-xxxx-xxxx-xxxxxx', // your identity pool id here
                         Logins: {
                             // Change the key below according to the specific region your user pool is in.
-                            'cognito-idp.us-east-1.amazonaws.com/us-east-1_xxxxxx': result
+                            'cognito-idp.us-west-2.amazonaws.com/us-west-2_xxxxxx': result
                                 .getIdToken()
                                 .getJwtToken(),
                         },
