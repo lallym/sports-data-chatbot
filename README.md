@@ -9,8 +9,8 @@ We want our application to be secure, so we will use Amazon Cognito as our ident
 4. Click the **Choose file** button and select and open the *cognito.yaml* file from this lab and click **Next**.
 5. Specify an appropriate **Stack name** such as "cognito-stack".
 6. For **AuthName** enter a prefix for this stack such as "chatbot" or "demo" then click **Next**.
-7. Scrool to the bottom of the page, check the box to acknowledge the creation of IAM resources, and click **Next**.
-8. Scroll to th bottom of the page and click **Create**.
+7. Scroll to the bottom of the page, check the box to acknowledge the creation of IAM resources, and click **Next**.
+8. Scroll to the bottom of the page and click **Create**.
 9. After a few moments, the Cognito resources will be created. At that time, navigate to Cognito in the us-east-1 region.
 10. We will need multiple pieces of information later, so we will note those down now. Click **User pools** from the menu on the left and then click on the name of the user pool that was just created.
 11. Copy the "User pool ID" and paste it into your choice of notepad or text document for later use.
