@@ -2,7 +2,7 @@
 var AWS;
 var APP = window.APP || {};
 AWS.config.logger = console;
-AWS.config.region = 'us-east-1';
+AWS.config.region = 'us-west-2';
 window.sessionStorage;
 var poolData = {
   UserPoolId: _config.cognito.userPoolId,
@@ -36,13 +36,13 @@ let conversationhist = '';
         if (result) {
           console.log('You are logged in.');
 
-          AWS.config.region = 'us-east-1';
+          AWS.config.region = 'us-west-2';
           // Add the User's Id Token to the Cognito credentials login map.
           AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-            IdentityPoolId: 'us-east-1:xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx', // your identity pool id here
+            IdentityPoolId: 'us-west-2:xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx', // your identity pool id here
             Logins: {
                 // Change the key below according to the specific region your user pool is in.
-                'cognito-idp.us-east-1.amazonaws.com/us-east-1_xxxxxxxx': result
+                'cognito-idp.us-west-2.amazonaws.com/us-west-2_xxxxxxxx': result
                     .getIdToken()
                     .getJwtToken(),
             },
