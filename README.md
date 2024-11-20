@@ -90,12 +90,14 @@ The Lambda function is the primary interface between our UI and other AWS servic
 16. Type Ctrl+S (or Command+S if on a Mac) to save the code changes.
 17. Scroll down to the **Layers** section and click on the **Add a layer** button.
 18. Select **Custom layers**, choose the *duckdb-bs4* custom layer we created earlier, choose *1* for the Version and click **Add**
-19. Above the **Code source** section click on the **Configuration** tab.
-20. Click the **Edit** button in the **General configuration** section.
-21. Change the **Timeout** to *2 min 30 sec*.
-22. Ensure "Use an existing role" is selected in the **Execution role** section and make note of the role name in the **Existing role** dropdown box. If no role is show, click the circle refresh icon to the right of the dropdown box.
-23. Click the **Save** button.
-24. Click the **Code** tab and then clikc the **Deploy** button to deploy our function.
+19. Scroll down to the **Layers** section and click on the **Add a layer** button.
+20. Select **AWS layers**, choose the *AWSSDKPandas-Python312* layer, choose the latest Version and click **Add**
+21. Above the **Code source** section click on the **Configuration** tab.
+22. Click the **Edit** button in the **General configuration** section.
+23. Change the **Timeout** to *2 min 30 sec*.
+24. Ensure "Use an existing role" is selected in the **Execution role** section and make note of the role name in the **Existing role** dropdown box. If no role is show, click the circle refresh icon to the right of the dropdown box.
+25. Click the **Save** button.
+26. Click the **Code** tab and then clikc the **Deploy** button to deploy our function.
 
 # Step 8: Update the Lambda Execution Role
 1. In the AWS console, navigate to IAM.
